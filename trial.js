@@ -1,4 +1,52 @@
+let MODE = "memorize";
 var isStressed = true;
+
+const socket = new WebSocket("ws://localhost:3000/ar");
+socket.onopen = () => {
+  console.log("[CONNECTED]");
+};
+socket.onclose = () => {
+  console.log("[DISCONNECTED]");
+};
+socket.onmessage = (e) => {
+  e = JSON.parse(e.data);
+  console.log(e);
+  switch (e.status) {
+    case "mode":
+      // document.getElementById("strood").style.display = "none";
+      MODE = e.MODE || MODE;
+      break;
+    case "stress":
+      isStressed = e.STRESS;
+      break;
+    case "result":
+      result(e.result);
+      break;
+    case "strood":
+      createStrood(e.strood);
+      break;
+    case "start":
+      switch (MODE) {
+        case "memorize":
+          MemorizePhase();
+          break;
+        case "search":
+          SearchPhase();
+          break;
+
+        default:
+          break;
+      }
+      break;
+    case "stop":
+      stopTimer();
+      break;
+
+    default:
+      break;
+  }
+};
+
 let numImgs = [
   "images-target/num-1.jpg",
   "images-target/num-2.jpg",
@@ -33,8 +81,31 @@ let list = [
   "plane-19",
   "plane-20",
 ];
+let imgSrs = [
+  "images/cat.jpg",
+  "images/corocdile.jpg",
+  "images/dog.jpg",
+  "images/elephant.jpg",
+  "images/giraffe.jpg",
+  "images/horse.jpg",
+  "images/lion2.jpg",
+  "images/monkey.jpg",
+  "images/penguin.jpg",
+  "images/rabbit.jpg",
+  "images/tiger.jpg",
+  "images/zebra.jpg",
+  "images/bagh.jpg",
+  "images/bear.jpg",
+  "images/camel.jpg",
+  "images/kangaro.jpg",
+  "images/owl.jpg",
+  "images/snake.jpg",
+  "images/tawoos.jpg",
+  "images/turtle.jpg",
+];
+let imgList = [];
 let hiddenImagesObject = {};
-function randomImages() {
+function hideRandomImages() {
   let arr = [];
   const imgIndex = {};
   for (let i = 0; i < 10; i++) {
@@ -52,6 +123,28 @@ function randomImages() {
   for (let k in imgIndex) {
     hiddenImgs.push(list[k]);
   }
+  const mapImagesToNumbersSource = {
+    "bagh.jpg": "img-1",
+    "bear.jpg": "img-2",
+    "camel.jpg": "img-3",
+    "cat.jpg": "img-4",
+    "crocodile.jpg": "img-5",
+    "dog.jpg": "img-6",
+    "elephant.jpg": "img-7",
+    "giraffe.jpg": "img-8",
+    "horse.jpg": "img-9",
+    "kangaro.jpg": "img-10",
+    "lion2.jpg": "img-11",
+    "monkey.jpg": "img-12",
+    "owl.jpg": "img-13",
+    "penguin.jpg": "img-14",
+    "rabbit.jpg": "img-15",
+    "snake.jpg": "img-16",
+    "tawoos.jpg": "img-17",
+    "tiger.jpg": "img-18",
+    "turtle.jpg": "img-19",
+    "zebra.jpg": "img-20",
+  };
   for (let i = 0; i < hiddenImgs.length; i++) {
     // let elem = document.getElementById(hiddenImgs[i]);
     // // console.log(elem);
@@ -60,9 +153,16 @@ function randomImages() {
     let src = elem.getAttribute("src");
     let id = document.getElementById(src.slice(1));
     let assetSrc = id.getAttribute("src");
-    hiddenImagesObject[i + 1] = assetSrc;
+    hiddenImagesObject[i + 1] =
+      mapImagesToNumbersSource[assetSrc.split("/")[1]];
     elem.setAttribute("src", numImgs[i]);
   }
+  socket.send(
+    JSON.stringify({
+      status: "hide",
+      value: hiddenImagesObject,
+    })
+  );
   console.log(hiddenImagesObject);
 }
 
@@ -70,13 +170,14 @@ AFRAME.registerComponent("randomization", {
   init: function () {
     let data = this.data;
     let el = this.el;
-    // randomImages()
+    // hideRandomImages()
   },
 });
 
 let timer = 0;
 let interval = null;
 function startTimer(limit, callback = null) {
+  console.log(limit);
   const timerEl = document.getElementById("timer");
   var visible = false;
   if (isStressed) {
@@ -89,7 +190,6 @@ function startTimer(limit, callback = null) {
     updateTime();
     if (timer == 0) {
       stopTimer();
-      timerEl.components.sound.stopSound();
       interval = null;
       if (callback) {
         callback();
@@ -101,6 +201,12 @@ function startTimer(limit, callback = null) {
 function updateTime(t = -1) {
   const timerEl = document.getElementById("timer");
   timer = t < 0 ? timer - 1 : t;
+  socket.send(
+    JSON.stringify({
+      status: "timer",
+      time: timer,
+    })
+  );
 
   // var sound = document.querySelector('[sound]');
   if (timer >= 10 && timer < 60) {
@@ -128,46 +234,24 @@ function updateTime(t = -1) {
 }
 function stopTimer(limit) {
   clearInterval(interval);
+  const timerEl = document.getElementById("timer");
+  timerEl.components.sound.stopSound();
 }
 
-// startTimer(10 , randomImages);
+// startTimer(10 , hideRandomImages);
 // var timerel = document.querySelector('#timer');
 
-let imgSrs = [
-  "images/cat.jpg",
-  "images/corocdile.jpg",
-  "images/dog.jpg",
-  "images/elephant.jpg",
-  "images/giraffe.jpg",
-  "images/horse.jpg",
-  "images/lion2.jpg",
-  "images/monkey.jpg",
-  "images/penguin.jpg",
-  "images/rabbit.jpg",
-  "images/tiger.jpg",
-  "images/zebra.jpg",
-  "images/bagh.jpg",
-  "images/bear.jpg",
-  "images/camel.jpg",
-  "images/kangaro.jpg",
-  "images/owl.jpg",
-  "images/snake.jpg",
-  "images/tawoos.jpg",
-  "images/turtle.jpg",
-];
-let imgList = [];
-function assignImgs() {
+function AssignImgAsset() {
   for (let i = 0; i < 20; i++) {
     let img = document.getElementById(+i);
     img.src = imgSrs[i];
   }
 }
-// assignImgs();
-function randomFirst() {
+// AssignImgAsset();
+function ArrayOfRndmImgs() {
   const imgIndex = {};
   for (let i = 0; i < 20; i++) {
     while (true) {
-      // console.log("5ara");
       const index = Math.floor(Math.random() * 20);
       if (!imgIndex[index]) {
         imgIndex[index] = true;
@@ -179,48 +263,52 @@ function randomFirst() {
   // console.log(imgList);
 }
 
-// randomFirst();
+// ArrayOfRndmImgs();
 
-function imgs() {
+function AssignRandomImages() {
   for (let i = 0; i < 20; i++) {
     let id = `img-${i}`;
     let img = document.getElementById(id);
     // console.log(img.getAttribute("src"));
     img.setAttribute("src", `#${imgList[i]}`);
-    img.setAttribute("visible", true);
   }
 }
-// imgs();
+// AssignRandomImages();
 
-assignImgs();
-function startAll() {
-  var start_cube = document.querySelector("#start-cube");
-  start_cube.addEventListener("click", function () {
-    stopTimer();
-    randomFirst();
-    imgs();
-    startTimer(10, withtest);
-  });
+function MemorizePhase() {
+  stopTimer();
+  hideAllImages();
+  AssignImgAsset();
+  ArrayOfRndmImgs();
+  AssignRandomImages();
+  showAllImages();
+  startTimer(210, hideAllImages);
 }
-startAll();
-function removeImages() {
+function hideAllImages() {
   for (let i = 0; i < 20; i++) {
-    // let el = document.getElementById(list[i]);
-    // el.removeChild(el.children[0]);
-
     let id = `img-${i}`;
     let img = document.getElementById(id);
     img.setAttribute("visible", false);
   }
 }
+function showAllImages() {
+  for (let i = 0; i < 20; i++) {
+    let id = `img-${i}`;
+    let img = document.getElementById(id);
+    img.setAttribute("visible", true);
+  }
+}
 
-function withtest() {
-  randomImages();
-  // const fun = async () => {
-  //   await delay(5000);
-  //   console.log("Waited 5s");
-  // };
-  startTimer(10, removeImages);
-  // wait(5000);
-  // startTimer(0);
+function result(result) {
+  if (isStressed && !result.result) {
+    const buzzerSound = document.getElementById("buzzerSound");
+    buzzerSound.components.sound.playSound();
+  }
+}
+
+function SearchPhase() {
+  stopTimer();
+  showAllImages();
+  hideRandomImages();
+  startTimer(120, hideAllImages);
 }
