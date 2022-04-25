@@ -131,7 +131,7 @@ function hideRandomImages() {
     "bear.jpg": "img-2",
     "camel.jpg": "img-3",
     "cat.jpg": "img-4",
-    "crocodile.jpg": "img-5",
+    "corocdile.jpg": "img-5",
     "dog.jpg": "img-6",
     "elephant.jpg": "img-7",
     "giraffe.jpg": "img-8",
@@ -254,6 +254,7 @@ function AssignImgAsset() {
 // AssignImgAsset();
 function ArrayOfRndmImgs() {
   const imgIndex = {};
+  imgList =[];
   for (let i = 0; i < 20; i++) {
     while (true) {
       const index = Math.floor(Math.random() * 20);
