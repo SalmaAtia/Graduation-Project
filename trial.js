@@ -17,6 +17,7 @@ socket.onmessage = (e) => {
       MODE = e.MODE || MODE;
       break;
     case "stress":
+      console.log(e.STRESS)
       isStressed = e.STRESS;
       break;
     case "result":
@@ -40,6 +41,7 @@ socket.onmessage = (e) => {
       break;
     case "stop":
       stopTimer();
+      hideAllImages();
       break;
 
     default:
@@ -88,7 +90,7 @@ let imgSrs = [
   "images/elephant.jpg",
   "images/giraffe.jpg",
   "images/horse.jpg",
-  "images/lion2.jpg",
+  "images/lion.jpg",
   "images/monkey.jpg",
   "images/penguin.jpg",
   "images/rabbit.jpg",
@@ -118,6 +120,7 @@ function hideRandomImages() {
       }
     }
   }
+  console.log(imgIndex)
   // console.log(arr);
   let hiddenImgs = [];
   for (let k in imgIndex) {
@@ -134,7 +137,7 @@ function hideRandomImages() {
     "giraffe.jpg": "img-8",
     "horse.jpg": "img-9",
     "kangaro.jpg": "img-10",
-    "lion2.jpg": "img-11",
+    "lion.jpg": "img-11",
     "monkey.jpg": "img-12",
     "owl.jpg": "img-13",
     "penguin.jpg": "img-14",
@@ -151,6 +154,7 @@ function hideRandomImages() {
     // elem.removeChild(elem.children[0]);
     let elem = document.getElementById(`img-${arr[i]}`);
     let src = elem.getAttribute("src");
+    console.log(src)
     let id = document.getElementById(src.slice(1));
     let assetSrc = id.getAttribute("src");
     hiddenImagesObject[i + 1] =
@@ -260,7 +264,7 @@ function ArrayOfRndmImgs() {
       }
     }
   }
-  // console.log(imgList);
+  console.log(imgList);
 }
 
 // ArrayOfRndmImgs();
@@ -276,13 +280,20 @@ function AssignRandomImages() {
 // AssignRandomImages();
 
 function MemorizePhase() {
+  console.log('entaa da5lt memorize 1')
   stopTimer();
   hideAllImages();
+  console.log('entaa da5lt memorize 2 ')
   AssignImgAsset();
+  console.log('entaa da5lt memorize 3')
   ArrayOfRndmImgs();
+  console.log('entaa da5lt memorize 4')
   AssignRandomImages();
+  console.log('entaa da5lt memorize 5')
   showAllImages();
+  console.log('entaa da5lt memorize 6')
   startTimer(210, hideAllImages);
+  console.log('entaa da5lt memorize 7')
 }
 function hideAllImages() {
   for (let i = 0; i < 20; i++) {

@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Classroom</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>
     <script src="https://gftruj.github.io/webzamples/aframe/controls/oculus-thumbstick-controls.js"></script>
   </head>
@@ -43,7 +43,7 @@
       <a-sound id="buzzerSound" src="src:url(Assets/buzzer.mp3)"></a-sound>
 
       <!-- Camera -->
-      <a-entity id="rig">
+      <!-- <a-entity id="rig">
         <a-entity
         look-controls
         wasd-controls
@@ -57,13 +57,29 @@
           oculus-touch-controls="hand: right"
           oculus-thumbstick-controls="acceleration: 20"
         ></a-entity>
-      </a-entity>
+      </a-entity> -->
+
+      <!-- Camera -->
+      <a-camera id="cam" position="0 1 0">
+        <a-entity cursor="rayOrigin: mouse"></a-entity>
+    </a-camera>
+
+
+    <!--Hands-->
+
+    <a-entity progressive-controls></a-entity>
+
+    <a-entity oculus-quest-controls="hand: left"></a-entity>
+
+    <a-entity oculus-quest-controls="hand: right" thumbstick-logging></a-entity>
+
+
 
       <a-entity
         id="classRoom"
         obj-model="obj: #class-obj; mtl: #class-mtl"
-        position="8 0 -5.5"
-        scale=" 0.005 0.005 0.005"
+        position="6.2 0 3"
+        scale=" 0.004 0.005 0.004"
         rotation="0 -180 0"
       >
         <a-entity
