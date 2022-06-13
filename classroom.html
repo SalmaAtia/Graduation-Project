@@ -11,7 +11,10 @@
     <script src="https://gftruj.github.io/webzamples/aframe/controls/oculus-thumbstick-controls.js"></script>
   </head>
   <body>
+
     <a-scene Set-Cookie: widget_session="abc123;" SameSite="None;" Secure>
+
+      <!-- Load Assets -->
       <a-assets>
         <a-asset-item
           id="class-obj"
@@ -43,457 +46,439 @@
       <a-sound id="buzzerSound" src="src:url(Assets/buzzer.mp3)"></a-sound>
 
       <!-- Camera -->
-      <!-- <a-entity id="rig">
-        <a-entity
-        look-controls
-        wasd-controls
-          camera
-          position="0 0.5 0"
-        >
-          <a-cursor></a-cursor>
-        </a-entity>
-        <a-entity oculus-touch-controls="hand: left"></a-entity>
-        <a-entity
-          oculus-touch-controls="hand: right"
-          oculus-thumbstick-controls="acceleration: 20"
-        ></a-entity>
-      </a-entity> -->
-
-      <!-- Camera -->
       <a-camera id="cam" position="0 1 0">
         <a-entity cursor="rayOrigin: mouse"></a-entity>
-    </a-camera>
+      </a-camera>
 
+      <!--Hands-->
+      <a-entity progressive-controls></a-entity>
+      <a-entity oculus-quest-controls="hand: left"></a-entity>
+      <a-entity oculus-quest-controls="hand: right" thumbstick-logging></a-entity>
 
-    <!--Hands-->
-
-    <a-entity progressive-controls></a-entity>
-
-    <a-entity oculus-quest-controls="hand: left"></a-entity>
-
-    <a-entity oculus-quest-controls="hand: right" thumbstick-logging></a-entity>
-
-
-
-      <a-entity
-        id="classRoom"
-        obj-model="obj: #class-obj; mtl: #class-mtl"
-        position="6.2 0 3"
-        scale=" 0.004 0.005 0.004"
-        rotation="0 -180 0"
-      >
+      <!-- Classroom object including all images -->
         <a-entity
-          id="timer"
-          position="1568 760 3200"
-          rotation="0 180 0"
-          scale="4000 4000 4000"
-          text="color: red; align:  center;"
-          sound="src: #Clock-Soud;  loop: true; positional: false; volume: 1;"
-        ></a-entity>
-        <!-- <a-entity id="timer" position="-0.45 9.6 -40" scale = "10 10 10" text="color: red;" sound="src: #Clock-Soud;  loop: true; positional: false; volume: 1;" ></a-entity> -->
-        <!-- Photos -->
-        <a-entity randomization>
-          <a-plane
-            color="#C1C1C1"
-            id="plane-1"
-            height="0.75"
-            width="1"
-            scale="250 250 250"
-            position="1198 113 -120"
-            rotation="-90 180 0"
-          >
-            <a-image
-              id="img-0"
-              position="0 0 0.01"
-              width="1"
-              height="0.75"
-              scale="1 1 1"
-            >
-            </a-image>
-          </a-plane>
+          id="classRoom"
+          obj-model="obj: #class-obj; mtl: #class-mtl"
+          position="6.2 0 3"
+          scale=" 0.004 0.005 0.004"
+          rotation="0 -180 0"
+        >
 
-          <a-plane
-            color="#C1C1C1"
-            id="plane-2"
-            height="0.75"
-            width="1"
-            scale="250 250 250"
-            position="1198 113 490"
-            rotation="-90 180 0"
-          >
-            <a-image
-              id="img-1"
-              position="0 0 0.01"
-              width="1"
-              height="0.75"
-              scale="1 1 1"
-            ></a-image>
-          </a-plane>
-
-          <a-plane
-            color="#C1C1C1"
-            id="plane-3"
-            height="0.75"
-            width="1"
-            scale="250 250 250"
-            position="1198 113 1090"
-            rotation="-90 180 0"
-          >
-            <a-image
-              id="img-2"
-              position="0 0 0.01"
-              width="1"
-              height="0.75"
-              scale="1 1 1"
-            >
-            </a-image>
-          </a-plane>
-
-          <a-plane
-            color="#C1C1C1"
-            id="plane-4"
-            height="0.75"
-            width="1"
-            scale="250 250 250"
-            position="1198 113 1700"
-            rotation="-90 180 0"
-          >
-            <a-image
-              id="img-3"
-              position="0 0 0.01"
-              width="1"
-              height="0.75"
-              scale="1 1 1"
-            >
-            </a-image>
-          </a-plane>
-
-          <a-plane
-            color="#C1C1C1"
-            id="plane-5"
-            height="0.75"
-            width="1"
-            scale="250 250 250"
-            position="1198 113 2266"
-            rotation="-90 180 0"
-          >
-            <a-image
-              id="img-4"
-              position="0 0 0.01"
-              width="1"
-              height="0.75"
-              scale="1 1 1"
-            >
-            </a-image>
-          </a-plane>
-
-          <a-plane
-            color="#C1C1C1"
-            id="plane-6"
-            height="0.75"
-            width="1"
-            scale="250 250 250"
-            position="1198 113 2875"
-            rotation="-90 180 0"
-          >
-            <a-image
-              id="img-5"
-              position="0 0 0.01"
-              width="1"
-              height="0.75"
-              scale="1 1 1"
-            >
-            </a-image>
-          </a-plane>
-
-          <a-plane
-            color="#C1C1C1"
-            id="plane-7"
-            height="0.75"
-            width="1"
-            scale="250 250 250"
-            position="1938 113 -120"
-            rotation="-90 180 0"
-          >
-            <a-image
-              id="img-6"
-              position="0 0 0.01"
-              width="1"
-              height="0.75"
-              scale="1 1 1"
-            >
-            </a-image>
-          </a-plane>
-
-          <a-plane
-            color="#C1C1C1"
-            id="plane-8"
-            height="0.75"
-            width="1"
-            scale="250 250 250"
-            position="1938 113 490"
-            rotation="-90 180 0"
-          >
-            <a-image
-              id="img-7"
-              position="0 0 0.01"
-              width="1"
-              height="0.75"
-              scale="1 1 1"
-            ></a-image>
-          </a-plane>
-
-          <a-plane
-            color="#C1C1C1"
-            id="plane-9"
-            height="0.75"
-            width="1"
-            scale="250 250 250"
-            position="1938 113 1090"
-            rotation="-90 180 0"
-          >
-            <a-image
-              id="img-8"
-              position="0 0 0.01"
-              width="1"
-              height="0.75"
-              scale="1 1 1"
-            >
-            </a-image>
-          </a-plane>
-
-          <a-plane
-            color="#C1C1C1"
-            id="plane-10"
-            height="0.75"
-            width="1"
-            scale="250 250 250"
-            position="1938 113 1700"
-            rotation="-90 180 0"
-          >
-            <a-image
-              id="img-9"
-              position="0 0 0.01"
-              width="1"
-              height="0.75"
-              scale="1 1 1"
-            >
-            </a-image>
-          </a-plane>
-
-          <a-plane
-            color="#C1C1C1"
-            id="plane-11"
-            height="0.75"
-            width="1"
-            scale="250 250 250"
-            position="1938 113 2266"
-            rotation="-90 180 0"
-          >
-            <a-image
-              id="img-10"
-              position="0 0 0.01"
-              width="1"
-              height="0.75"
-              scale="1 1 1"
-            >
-            </a-image>
-          </a-plane>
-
-          <a-plane
-            color="#C1C1C1"
-            id="plane-12"
-            height="0.75"
-            width="1"
-            scale="250 250 250"
-            position="1938 113 2875"
-            rotation="-90 180 0"
-          >
-            <a-image
-              id="img-11"
-              position="0 0 0.01"
-              width="1"
-              height="0.75"
-              scale="1 1 1"
-            >
-            </a-image>
-          </a-plane>
-
-          <a-plane
-            color="#C1C1C1"
-            id="plane-13"
-            height="0.75"
-            width="1"
-            scale="500 500 500"
-            position="1938 450 3290"
+          <!-- Timer  -->
+          <a-entity
+            id="timer"
+            position="1568 760 3200"
             rotation="0 180 0"
-          >
-            <a-image
-              id="img-12"
-              position="0 0 0.01"
-              width="1"
+            scale="4000 4000 4000"
+            text="color: red; align:  center;"
+            sound="src: #Clock-Soud;  loop: true; positional: false; volume: 1;"
+          ></a-entity>
+          
+          <!-- Photos -->
+          <a-entity randomization>
+            <a-plane
+              color="#C1C1C1"
+              id="plane-1"
               height="0.75"
-              scale="1 1 1"
-            >
-            </a-image>
-          </a-plane>
-
-          <a-plane
-            color="#C1C1C1"
-            id="plane-14"
-            height="0.75"
-            width="1"
-            scale="500 500 500"
-            position="1198 450 3290"
-            rotation="0 180 0"
-          >
-            <a-image
-              id="img-13"
-              position="0 0 0.01"
               width="1"
-              height="0.75"
-              scale="1 1 1"
+              scale="250 250 250"
+              position="1198 113 -120"
+              rotation="-90 180 0"
             >
-            </a-image>
-          </a-plane>
+              <a-image
+                id="img-0"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
 
-          <a-plane
-            color="#C1C1C1"
-            id="plane-15"
-            height="0.75"
-            width="1"
-            scale="400 400 400"
-            position="83 450 1880"
-            rotation="0 90 0"
-          >
-            <a-image
-              id="img-14"
-              position="0 0 0.01"
+            <a-plane
+              color="#C1C1C1"
+              id="plane-2"
+              height="0.75"
               width="1"
-              height="0.75"
-              scale="1 1 1"
+              scale="250 250 250"
+              position="1198 113 490"
+              rotation="-90 180 0"
             >
-            </a-image>
-          </a-plane>
+              <a-image
+                id="img-1"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              ></a-image>
+            </a-plane>
 
-          <a-plane
-            color="#C1C1C1"
-            id="plane-16"
-            height="0.75"
-            width="1"
-            scale="400 400 400"
-            position="83 450 750"
-            rotation="0 90 0"
-          >
-            <a-image
-              id="img-15"
-              position="0 0 0.01"
+            <a-plane
+              color="#C1C1C1"
+              id="plane-3"
+              height="0.75"
               width="1"
-              height="0.75"
-              scale="1 1 1"
+              scale="250 250 250"
+              position="1198 113 1090"
+              rotation="-90 180 0"
             >
-            </a-image>
-          </a-plane>
+              <a-image
+                id="img-2"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
 
-          <a-plane
-            color="#C1C1C1"
-            id="plane-17"
-            height="0.75"
-            width="1"
-            scale="400 400 400"
-            position="83 450 -390"
-            rotation="0 90 0"
-          >
-            <a-image
-              id="img-16"
-              position="0 0 0.01"
+            <a-plane
+              color="#C1C1C1"
+              id="plane-4"
+              height="0.75"
               width="1"
-              height="0.75"
-              scale="1 1 1"
+              scale="250 250 250"
+              position="1198 113 1700"
+              rotation="-90 180 0"
             >
-            </a-image>
-          </a-plane>
+              <a-image
+                id="img-3"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
 
-          <a-plane
-            color="#C1C1C1"
-            id="plane-18"
-            height="0.75"
-            width="1"
-            scale="400 400 400"
-            position="1198 456 -1606"
-            rotation="0 0 0"
-          >
-            <a-image
-              id="img-17"
-              position="0 0 0.01"
+            <a-plane
+              color="#C1C1C1"
+              id="plane-5"
+              height="0.75"
               width="1"
-              height="0.75"
-              scale="1 1 1"
+              scale="250 250 250"
+              position="1198 113 2266"
+              rotation="-90 180 0"
             >
-            </a-image>
-          </a-plane>
+              <a-image
+                id="img-4"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
 
-          <a-plane
-            color="#C1C1C1"
-            id="plane-19"
-            height="0.75"
-            width="1"
-            scale="400 400 400"
-            position="1938 456 -1606"
-            rotation="0 0 0"
-          >
-            <a-image
-              id="img-18"
-              position="0 0 0.01"
+            <a-plane
+              color="#C1C1C1"
+              id="plane-6"
+              height="0.75"
               width="1"
-              height="0.75"
-              scale="1 1 1"
+              scale="250 250 250"
+              position="1198 113 2875"
+              rotation="-90 180 0"
             >
-            </a-image>
-          </a-plane>
+              <a-image
+                id="img-5"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
 
-          <a-plane
-            color="#C1C1C1"
-            id="plane-20"
-            height="0.75"
-            width="1"
-            scale="400 400 400"
-            position="3062 505 -444"
-            rotation="0 -90 0"
-          >
-            <a-image
-              id="img-19"
-              position="0 0 0.01"
+            <a-plane
+              color="#C1C1C1"
+              id="plane-7"
+              height="0.75"
               width="1"
-              height="0.75"
-              scale="1 1 1"
+              scale="250 250 250"
+              position="1938 113 -120"
+              rotation="-90 180 0"
             >
-            </a-image>
-          </a-plane>
+              <a-image
+                id="img-6"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
 
-          <a-plane
-            color="rgb(48, 87, 43)"
-            id="left-board"
-            height="0.75"
-            width="1"
-            scale="340 724 400"
-            position="966 451 -1606"
-            rotation="0 0 0"
-          >
-          </a-plane>
-          <a-plane
-            color="rgb(48, 87, 43)"
-            id="right-board"
-            height="0.75"
-            width="1"
-            scale="340 724 400"
-            position="2205 451 -1606"
-            rotation="0 0 0"
-          >
-          </a-plane>
+            <a-plane
+              color="#C1C1C1"
+              id="plane-8"
+              height="0.75"
+              width="1"
+              scale="250 250 250"
+              position="1938 113 490"
+              rotation="-90 180 0"
+            >
+              <a-image
+                id="img-7"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              ></a-image>
+            </a-plane>
+
+            <a-plane
+              color="#C1C1C1"
+              id="plane-9"
+              height="0.75"
+              width="1"
+              scale="250 250 250"
+              position="1938 113 1090"
+              rotation="-90 180 0"
+            >
+              <a-image
+                id="img-8"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
+
+            <a-plane
+              color="#C1C1C1"
+              id="plane-10"
+              height="0.75"
+              width="1"
+              scale="250 250 250"
+              position="1938 113 1700"
+              rotation="-90 180 0"
+            >
+              <a-image
+                id="img-9"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
+
+            <a-plane
+              color="#C1C1C1"
+              id="plane-11"
+              height="0.75"
+              width="1"
+              scale="250 250 250"
+              position="1938 113 2266"
+              rotation="-90 180 0"
+            >
+              <a-image
+                id="img-10"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
+
+            <a-plane
+              color="#C1C1C1"
+              id="plane-12"
+              height="0.75"
+              width="1"
+              scale="250 250 250"
+              position="1938 113 2875"
+              rotation="-90 180 0"
+            >
+              <a-image
+                id="img-11"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
+
+            <a-plane
+              color="#C1C1C1"
+              id="plane-13"
+              height="0.75"
+              width="1"
+              scale="500 500 500"
+              position="1938 450 3290"
+              rotation="0 180 0"
+            >
+              <a-image
+                id="img-12"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
+
+            <a-plane
+              color="#C1C1C1"
+              id="plane-14"
+              height="0.75"
+              width="1"
+              scale="500 500 500"
+              position="1198 450 3290"
+              rotation="0 180 0"
+            >
+              <a-image
+                id="img-13"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
+
+            <a-plane
+              color="#C1C1C1"
+              id="plane-15"
+              height="0.75"
+              width="1"
+              scale="400 400 400"
+              position="83 450 1880"
+              rotation="0 90 0"
+            >
+              <a-image
+                id="img-14"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
+
+            <a-plane
+              color="#C1C1C1"
+              id="plane-16"
+              height="0.75"
+              width="1"
+              scale="400 400 400"
+              position="83 450 750"
+              rotation="0 90 0"
+            >
+              <a-image
+                id="img-15"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
+
+            <a-plane
+              color="#C1C1C1"
+              id="plane-17"
+              height="0.75"
+              width="1"
+              scale="400 400 400"
+              position="83 450 -390"
+              rotation="0 90 0"
+            >
+              <a-image
+                id="img-16"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
+
+            <a-plane
+              color="#C1C1C1"
+              id="plane-18"
+              height="0.75"
+              width="1"
+              scale="400 400 400"
+              position="1198 456 -1606"
+              rotation="0 0 0"
+            >
+              <a-image
+                id="img-17"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
+
+            <a-plane
+              color="#C1C1C1"
+              id="plane-19"
+              height="0.75"
+              width="1"
+              scale="400 400 400"
+              position="1938 456 -1606"
+              rotation="0 0 0"
+            >
+              <a-image
+                id="img-18"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
+
+            <a-plane
+              color="#C1C1C1"
+              id="plane-20"
+              height="0.75"
+              width="1"
+              scale="400 400 400"
+              position="3062 505 -444"
+              rotation="0 -90 0"
+            >
+              <a-image
+                id="img-19"
+                position="0 0 0.01"
+                width="1"
+                height="0.75"
+                scale="1 1 1"
+              >
+              </a-image>
+            </a-plane>
+
+            <a-plane
+              color="rgb(48, 87, 43)"
+              id="left-board"
+              height="0.75"
+              width="1"
+              scale="340 724 400"
+              position="966 451 -1606"
+              rotation="0 0 0"
+            >
+            </a-plane>
+            <a-plane
+              color="rgb(48, 87, 43)"
+              id="right-board"
+              height="0.75"
+              width="1"
+              scale="340 724 400"
+              position="2205 451 -1606"
+              rotation="0 0 0"
+            >
+            </a-plane>
+          </a-entity>
         </a-entity>
-      </a-entity>
     </a-scene>
-    <script src="trial.js"></script>
+
+    <!-- script -->
+    <script src="main.js"></script>
   </body>
 </html>

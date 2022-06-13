@@ -1,6 +1,19 @@
+// Initialize experiment phase  
 let MODE = "memorize";
+
+// Initialize experiment mode 
 var isStressed = true;
 
+// Return camera to the initial position when press space on keyboard
+document.addEventListener('keyup',(event)=>{
+  if (event.keyCode === 32) {
+    const camera = document.querySelector('a-camera')
+    camera.setAttribute('position',"0 1.5 0")
+  }
+    
+})
+
+// Connect to backend
 const socket = new WebSocket("ws://localhost:3000/ar");
 socket.onopen = () => {
   console.log("[CONNECTED]");
@@ -13,7 +26,6 @@ socket.onmessage = (e) => {
   console.log(e);
   switch (e.status) {
     case "mode":
-      // document.getElementById("strood").style.display = "none";
       MODE = e.MODE || MODE;
       break;
     case "stress":
@@ -49,6 +61,7 @@ socket.onmessage = (e) => {
   }
 };
 
+// Load target images
 let numImgs = [
   "images-target/num-1.jpg",
   "images-target/num-2.jpg",
@@ -61,6 +74,8 @@ let numImgs = [
   "images-target/num-9.jpg",
   "images-target/num-10.jpg",
 ];
+
+// Initialize images planes 
 let list = [
   "plane-1",
   "plane-2",
@@ -83,6 +98,8 @@ let list = [
   "plane-19",
   "plane-20",
 ];
+
+// Load animal images
 let imgSrs = [
   "images/cat.jpg",
   "images/corocdile.jpg",
@@ -105,6 +122,8 @@ let imgSrs = [
   "images/tawoos.jpg",
   "images/turtle.jpg",
 ];
+
+// Function to hide 10 random animal images, replace them with number images and send hidden images to backend 
 let imgList = [];
 let hiddenImagesObject = {};
 function hideRandomImages() {
@@ -121,7 +140,7 @@ function hideRandomImages() {
     }
   }
   console.log(imgIndex)
-  // console.log(arr);
+
   let hiddenImgs = [];
   for (let k in imgIndex) {
     hiddenImgs.push(list[k]);
@@ -149,12 +168,8 @@ function hideRandomImages() {
     "zebra.jpg": "img-20",
   };
   for (let i = 0; i < hiddenImgs.length; i++) {
-    // let elem = document.getElementById(hiddenImgs[i]);
-    // // console.log(elem);
-    // elem.removeChild(elem.children[0]);
     let elem = document.getElementById(`img-${arr[i]}`);
     let src = elem.getAttribute("src");
-    console.log(src)
     let id = document.getElementById(src.slice(1));
     let assetSrc = id.getAttribute("src");
     hiddenImagesObject[i + 1] =
@@ -170,14 +185,7 @@ function hideRandomImages() {
   console.log(hiddenImagesObject);
 }
 
-AFRAME.registerComponent("randomization", {
-  init: function () {
-    let data = this.data;
-    let el = this.el;
-    // hideRandomImages()
-  },
-});
-
+// Function that generate timer, show it and play the timer sound if stress phase 
 let timer = 0;
 let interval = null;
 function startTimer(limit, callback = null) {
@@ -202,6 +210,7 @@ function startTimer(limit, callback = null) {
   }, 1000);
 }
 
+// Update timer and display it as minutes and seconds
 function updateTime(t = -1) {
   const timerEl = document.getElementById("timer");
   timer = t < 0 ? timer - 1 : t;
@@ -211,47 +220,38 @@ function updateTime(t = -1) {
       time: timer,
     })
   );
-
-  // var sound = document.querySelector('[sound]');
   if (timer >= 10 && timer < 60) {
-    // timerEl.innerHTML = `00:${timer}`;
     timerEl.setAttribute("text", "value", `00:${timer}`);
   } else if (timer >= 0 && timer < 10) {
-    // timerEl.innerHTML = `00:${timer}`;
     timerEl.setAttribute("text", "value", `00:0${timer}`);
   } else if (timer >= 60) {
     const min = Math.floor(timer / 60);
     const sec = Math.floor(timer % 60);
 
     if (sec >= 10 && sec < 60) {
-      // timerEl.innerHTML = `0${min}:${sec}`;
       timerEl.setAttribute("text", "value", `0${min}:${sec}`);
     } else if (sec >= 0 && sec < 10) {
-      // timerEl.innerHTML = `0${min}:0${sec}`;
       timerEl.setAttribute("text", "value", `0${min}:0${sec}`);
     }
   }
-  //  else {
-  //   timerEl.innerHTML = `00:0${timer}`;
-  //   timerEl.setAttribute("text", "value",`00:0${timer}` );
-  // }
 }
+
+// Stop timer and stop timer sound
 function stopTimer(limit) {
   clearInterval(interval);
   const timerEl = document.getElementById("timer");
   timerEl.components.sound.stopSound();
 }
 
-// startTimer(10 , hideRandomImages);
-// var timerel = document.querySelector('#timer');
-
+// Assign images to the html file
 function AssignImgAsset() {
   for (let i = 0; i < 20; i++) {
     let img = document.getElementById(+i);
     img.src = imgSrs[i];
   }
 }
-// AssignImgAsset();
+
+// Creat array of random images
 function ArrayOfRndmImgs() {
   const imgIndex = {};
   imgList =[];
@@ -268,34 +268,29 @@ function ArrayOfRndmImgs() {
   console.log(imgList);
 }
 
-// ArrayOfRndmImgs();
-
+// Assign Random Images the html file
 function AssignRandomImages() {
   for (let i = 0; i < 20; i++) {
     let id = `img-${i}`;
     let img = document.getElementById(id);
-    // console.log(img.getAttribute("src"));
     img.setAttribute("src", `#${imgList[i]}`);
   }
 }
-// AssignRandomImages();
 
+// Memorize Phase: assign images randomly to html file then hide them after 3.5 mins
 function MemorizePhase() {
-  console.log('entaa da5lt memorize 1')
+
   stopTimer();
   hideAllImages();
-  console.log('entaa da5lt memorize 2 ')
   AssignImgAsset();
-  console.log('entaa da5lt memorize 3')
   ArrayOfRndmImgs();
-  console.log('entaa da5lt memorize 4')
   AssignRandomImages();
-  console.log('entaa da5lt memorize 5')
   showAllImages();
-  console.log('entaa da5lt memorize 6')
   startTimer(210, hideAllImages);
-  console.log('entaa da5lt memorize 7')
+
 }
+
+// Function that hide all images from classroom 
 function hideAllImages() {
   for (let i = 0; i < 20; i++) {
     let id = `img-${i}`;
@@ -303,6 +298,8 @@ function hideAllImages() {
     img.setAttribute("visible", false);
   }
 }
+
+// Function that show all images in classroom 
 function showAllImages() {
   for (let i = 0; i < 20; i++) {
     let id = `img-${i}`;
@@ -311,6 +308,7 @@ function showAllImages() {
   }
 }
 
+// Function to play buzzer sound 
 function result(result) {
   if (isStressed && !result.result) {
     const buzzerSound = document.getElementById("buzzerSound");
@@ -318,6 +316,7 @@ function result(result) {
   }
 }
 
+// Memorize Phase: hide 10 images randomly(replace them with numbers) then hide all images after 2 mins 
 function SearchPhase() {
   stopTimer();
   showAllImages();
